@@ -1,0 +1,18 @@
+h1 {
+	color: #aa0000;
+	font-size: 25px;
+
+}
+
+.formLabel {
+	display: inline;
+}
+
+body {
+	text-align: center;
+}
+
+.allborder{
+	border: 4px double black;
+	width: 250px;
+}

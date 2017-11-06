@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Телефонная книга</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="./jquery-3.2.1.js"></script>
+    <script src="./bundle.js"></script>
+    <script src="./bootstrap-3.3.2-dist/js/bootstrap.js"></script>
+    <script src="./bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <h1>Телефонная книга</h1>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6 allborder">
+                <table id="div_table">
+                    <tr>
+                        <td>Имя</td>
+                        <td>Телефон</td>
+                        <td>Адрес</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-6" id="div_addNewNote">
+                <form id="addForm" class="allborder">
+                    <p>Добавить контакт</p>
+                    <table>
+                        <tr>
+                            <td>Имя</td>
+                            <td>
+                                <input name="name" type="text">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Телефон</td>
+                            <td>
+                                <input name="telephone" type="text">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Адрес</td>
+                            <td>
+                                <input name="city" type="text">
+                            </td>
+                        </tr>
+
+                    </table>
+                    <input type='submit' value="Добавить" id="addBut">
+                </form>
+                <form id="deleteForm" class="allborder">
+                    <p>Удалить контакт</p>
+                    <table>
+                        <tr>
+                            <td>Имя</td>
+                            <td>
+                                <input name="name" type="text">
+                            </td>
+                        </tr>
+                    </table>
+                    <input type='submit' value="Удалить" id="deleteBut">
+                </form>
+            </div>
+        </div>
+    </div>
+    <footer>
+
+    </footer>
+</body>
+
+</html>

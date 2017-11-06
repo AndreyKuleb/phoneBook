@@ -1,0 +1,19 @@
+{
+  "name": "internJs",
+  "version": "1.0.0",
+  "author": "Andrey Kulebyakin",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "webpack": "^3.8.1"
+  },
+  "scripts": {
+    "start": "webpack"
+  },
+  "dependencies": {
+    "babel-preset-react": "^6.24.1",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0"
+  }
+}
