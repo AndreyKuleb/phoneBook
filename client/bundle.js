@@ -1008,6 +1008,10 @@ var _propTypes = __webpack_require__(15);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
+var _sender = __webpack_require__(32);
+
+var _sender2 = _interopRequireDefault(_sender);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1015,6 +1019,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+//import TableOfContacts from "./tableOfContacts.js";
+
 
 var zagolovok = ["Имя", "Телефон", "Адрес"];
 var baseData = [{
@@ -1060,7 +1066,7 @@ var App = function (_React$Component) {
           null,
           '\u0422\u0435\u043B\u0435\u0444\u043E\u043D\u043D\u0430\u044F \u043A\u043D\u0438\u0433\u0430'
         ),
-        _react2.default.createElement(Table, { zagolovok: zagolovok, data: baseData }),
+        _react2.default.createElement(Table, { zagolovok: zagolovok, table: baseData }),
         _react2.default.createElement(AddForm, null),
         _react2.default.createElement(DeleteForm, null)
       );
@@ -1073,17 +1079,31 @@ var App = function (_React$Component) {
 var Table = function (_React$Component2) {
   _inherits(Table, _React$Component2);
 
-  function Table() {
+  function Table(props) {
     _classCallCheck(this, Table);
 
-    return _possibleConstructorReturn(this, (Table.__proto__ || Object.getPrototypeOf(Table)).apply(this, arguments));
+    var _this2 = _possibleConstructorReturn(this, (Table.__proto__ || Object.getPrototypeOf(Table)).call(this, props));
+
+    _this2.state = {
+      table: _this2.props.table
+    };
+    return _this2;
   }
 
   _createClass(Table, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var sender = new _sender2.default();
+      var data = sender.getData('GET', '/contacts');
+      if (data) {
+        this.setState({ table: data });
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
       var zagolovok = this.props.zagolovok;
-      var data = this.props.data;
+      var data = this.state.table;
 
       var tableZagolovok = zagolovok.map(function (item, index) {
         return _react2.default.createElement(
@@ -21346,6 +21366,75 @@ module.exports = function() {
   return ReactPropTypes;
 };
 
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Sender = function () {
+    function Sender() {
+        _classCallCheck(this, Sender);
+    }
+
+    _createClass(Sender, [{
+        key: "sendData",
+        value: function sendData(data, method, url, table) {
+            $.ajax({
+                url: url, // указываем URL и
+                method: method,
+                dataType: "json", // тип загружаемых данных
+                data: data,
+                success: function success(data, textStatus) {// вешаем свой обработчик на функцию success
+
+                }
+            });
+        }
+    }, {
+        key: "getData",
+        value: function getData(method, url) {
+            $.ajax({
+                url: url, // указываем URL и
+                method: method,
+                dataType: "json", // тип загружаемых данных
+                data: {},
+                //statusCode: {
+                //не найдена страница - перерисовываем таблицу с теми данными, что есть
+                //     404: function() {
+                //         //table.rewrite();
+                //     },
+                //     500: function(){
+                //     }
+                //  }
+                success: function success(data, textStatus) {
+                    // вешаем свой обработчик на функцию success
+                    console.log(data);
+                    console.log(textStatus);
+                    if (textStatus === "200") {
+                        return data;
+                    } else {
+                        //перерисовываем таблицу
+                        //table.rewrite();
+                    }
+                }
+            });
+        }
+    }]);
+
+    return Sender;
+}();
+
+exports.default = Sender;
 
 /***/ })
 /******/ ]);

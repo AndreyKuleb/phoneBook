@@ -1,9 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
+//import TableOfContacts from "./tableOfContacts.js";
+import Sender from "./sender.js";
 
 let zagolovok = ["Имя", "Телефон", "Адрес"];
-let baseData = [
+let baseData =  [
   {
       name: "Vasya",
       telephone: "89161234567",
@@ -34,7 +36,7 @@ class App extends React.Component{
       return (
         <div className="app">
           <h1>Телефонная книга</h1>
-          <Table  zagolovok = {zagolovok} data = {baseData}/>
+          <Table  zagolovok = {zagolovok} table = {baseData}/>
           <AddForm />
           <DeleteForm />
         </div>
@@ -43,9 +45,22 @@ class App extends React.Component{
   }
 
   class Table extends React.Component{
+    constructor(props){
+      super(props);
+      this.state = {
+        table: this.props.table
+      }
+    }
+    componentDidMount(){
+      let sender = new Sender;
+      let data = sender.getData('GET', '/contacts');
+      if(data){
+        this.setState({table: data})
+      }
+    }
     render() {
       let zagolovok = this.props.zagolovok;
-      let data = this.props.data;
+      let data = this.state.table;
 
       let tableZagolovok = zagolovok.map((item, index) => {
         return (
