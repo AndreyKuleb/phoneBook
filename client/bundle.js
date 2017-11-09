@@ -1266,19 +1266,64 @@ var AddForm = function (_React$Component3) {
 var DeleteForm = function (_React$Component4) {
   _inherits(DeleteForm, _React$Component4);
 
-  function DeleteForm() {
+  function DeleteForm(props) {
     _classCallCheck(this, DeleteForm);
 
-    return _possibleConstructorReturn(this, (DeleteForm.__proto__ || Object.getPrototypeOf(DeleteForm)).apply(this, arguments));
+    var _this5 = _possibleConstructorReturn(this, (DeleteForm.__proto__ || Object.getPrototypeOf(DeleteForm)).call(this, props));
+
+    _this5.handleSubmit = _this5.handleSubmit.bind(_this5);
+    return _this5;
   }
 
   _createClass(DeleteForm, [{
+    key: 'handleSubmit',
+    value: function handleSubmit(e) {
+      e.preventDefault();
+      // console.log(this.refs);
+      console.log(this.nameInput.value);
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var _this6 = this;
+
       return _react2.default.createElement(
         'div',
-        { className: 'app' },
-        '\u0424\u043E\u0440\u043C\u044B \u0443\u0434\u0430\u043B\u0435\u043D\u0438\u044F \u043F\u043E\u043A\u0430 \u043D\u0435\u0442!'
+        null,
+        _react2.default.createElement(
+          'form',
+          { id: 'deleteForm', className: 'allborder', onSubmit: this.handleSubmit },
+          _react2.default.createElement(
+            'p',
+            null,
+            '\u0423\u0434\u0430\u043B\u0438\u0442\u044C \u043A\u043E\u043D\u0442\u0430\u043A\u0442'
+          ),
+          _react2.default.createElement(
+            'table',
+            null,
+            _react2.default.createElement(
+              'tbody',
+              null,
+              _react2.default.createElement(
+                'tr',
+                null,
+                _react2.default.createElement(
+                  'td',
+                  null,
+                  '\u0418\u043C\u044F'
+                ),
+                _react2.default.createElement(
+                  'td',
+                  null,
+                  _react2.default.createElement('input', { name: 'name', type: 'text', ref: function ref(input) {
+                      return _this6.nameInput = input;
+                    } })
+                )
+              )
+            )
+          ),
+          _react2.default.createElement('input', { type: 'submit', value: '\u0423\u0434\u0430\u043B\u0438\u0442\u044C', id: 'deleteBut' })
+        )
       );
     }
   }]);

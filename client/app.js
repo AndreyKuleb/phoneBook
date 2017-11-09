@@ -102,6 +102,7 @@ class App extends React.Component{
       )
     }
   }
+
   class AddForm extends React.Component{
     constructor(props) {
       super(props);
@@ -150,10 +151,33 @@ class App extends React.Component{
     }
   }
   class DeleteForm extends React.Component{
+    constructor(props) {
+      super(props);
+      this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleSubmit(e){
+      e.preventDefault();
+      // console.log(this.refs);
+      console.log(this.nameInput.value);
+    }
     render() {
       return (
-        <div className="app">
-          Формы удаления пока нет!
+        <div>
+         <form id="deleteForm" className="allborder" onSubmit={this.handleSubmit}>
+         <p>Удалить контакт</p>
+         <table>
+         <tbody>
+             <tr>
+                 <td>Имя</td>
+                 <td>
+                     <input name="name" type="text"  ref={(input) => this.nameInput = input}></input>
+                 </td>
+             </tr>
+         </tbody>
+         </table>
+         <input type='submit' value="Удалить" id="deleteBut"></input>
+         </form>
         </div>
       )
     }
