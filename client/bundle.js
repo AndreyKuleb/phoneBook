@@ -1008,10 +1008,6 @@ var _propTypes = __webpack_require__(15);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _sender = __webpack_require__(32);
-
-var _sender2 = _interopRequireDefault(_sender);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -1019,8 +1015,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-//import TableOfContacts from "./tableOfContacts.js";
 
+//import TableOfContacts from "./tableOfContacts.js";
+//import Sender from "./sender.js";
 
 var zagolovok = ["Имя", "Телефон", "Адрес"];
 var baseData = [{
@@ -1093,10 +1090,21 @@ var Table = function (_React$Component2) {
   _createClass(Table, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      var sender = new _sender2.default();
-      var data = sender.getData('GET', '/contacts');
-      if (data) {
-        this.setState({ table: data });
+      var result = void 0;
+      fetch('/contacts', { method: 'GET' }).then(function (response) {
+        if (response.status !== 200) {
+          console.log('Проблема соединения с сервером. Код ошибки: ' + response.status);
+          return;
+        }
+        response.json().then(function (data) {
+          result = data;
+        });
+      }).catch(function () {
+        console.log('Сервер недоступен. Перезвоните позже. Пип.Пип.Пип.');
+      });
+      console.log(result);
+      if (result) {
+        this.setState({ table: result });
       }
     }
   }, {
@@ -1156,19 +1164,98 @@ var Table = function (_React$Component2) {
 var AddForm = function (_React$Component3) {
   _inherits(AddForm, _React$Component3);
 
-  function AddForm() {
+  function AddForm(props) {
     _classCallCheck(this, AddForm);
 
-    return _possibleConstructorReturn(this, (AddForm.__proto__ || Object.getPrototypeOf(AddForm)).apply(this, arguments));
+    var _this3 = _possibleConstructorReturn(this, (AddForm.__proto__ || Object.getPrototypeOf(AddForm)).call(this, props));
+
+    _this3.handleSubmit = _this3.handleSubmit.bind(_this3);
+    return _this3;
   }
 
   _createClass(AddForm, [{
+    key: 'handleSubmit',
+    value: function handleSubmit(e) {
+      e.preventDefault();
+      // console.log(this.refs);
+      console.log(this.nameInput.value);
+      console.log(this.telInput.value);
+      console.log(this.cityInput.value);
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var _this4 = this;
+
       return _react2.default.createElement(
         'div',
-        { className: 'app' },
-        '\u0424\u043E\u0440\u043C\u044B \u0434\u043E\u0431\u0430\u043B\u0435\u043D\u0438\u044F \u043F\u043E\u043A\u0430 \u043D\u0435\u0442!'
+        null,
+        _react2.default.createElement(
+          'form',
+          { id: 'addForm', className: 'allborder', onSubmit: this.handleSubmit },
+          _react2.default.createElement(
+            'p',
+            null,
+            '\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u043A\u043E\u043D\u0442\u0430\u043A\u0442'
+          ),
+          _react2.default.createElement(
+            'table',
+            null,
+            _react2.default.createElement(
+              'tbody',
+              null,
+              _react2.default.createElement(
+                'tr',
+                null,
+                _react2.default.createElement(
+                  'td',
+                  null,
+                  '\u0418\u043C\u044F'
+                ),
+                _react2.default.createElement(
+                  'td',
+                  null,
+                  _react2.default.createElement('input', { name: 'name', type: 'text', ref: function ref(input) {
+                      return _this4.nameInput = input;
+                    } })
+                )
+              ),
+              _react2.default.createElement(
+                'tr',
+                null,
+                _react2.default.createElement(
+                  'td',
+                  null,
+                  '\u0422\u0435\u043B\u0435\u0444\u043E\u043D'
+                ),
+                _react2.default.createElement(
+                  'td',
+                  null,
+                  _react2.default.createElement('input', { name: 'telephone', type: 'text', ref: function ref(input) {
+                      return _this4.telInput = input;
+                    } })
+                )
+              ),
+              _react2.default.createElement(
+                'tr',
+                null,
+                _react2.default.createElement(
+                  'td',
+                  null,
+                  '\u0410\u0434\u0440\u0435\u0441'
+                ),
+                _react2.default.createElement(
+                  'td',
+                  null,
+                  _react2.default.createElement('input', { name: 'city', type: 'text', ref: function ref(input) {
+                      return _this4.cityInput = input;
+                    } })
+                )
+              )
+            )
+          ),
+          _react2.default.createElement('input', { type: 'submit', value: '\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C', id: 'addBut', ref: 'myTestInput' })
+        )
       );
     }
   }]);
@@ -21366,75 +21453,6 @@ module.exports = function() {
   return ReactPropTypes;
 };
 
-
-/***/ }),
-/* 32 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var Sender = function () {
-    function Sender() {
-        _classCallCheck(this, Sender);
-    }
-
-    _createClass(Sender, [{
-        key: "sendData",
-        value: function sendData(data, method, url, table) {
-            $.ajax({
-                url: url, // указываем URL и
-                method: method,
-                dataType: "json", // тип загружаемых данных
-                data: data,
-                success: function success(data, textStatus) {// вешаем свой обработчик на функцию success
-
-                }
-            });
-        }
-    }, {
-        key: "getData",
-        value: function getData(method, url) {
-            $.ajax({
-                url: url, // указываем URL и
-                method: method,
-                dataType: "json", // тип загружаемых данных
-                data: {},
-                //statusCode: {
-                //не найдена страница - перерисовываем таблицу с теми данными, что есть
-                //     404: function() {
-                //         //table.rewrite();
-                //     },
-                //     500: function(){
-                //     }
-                //  }
-                success: function success(data, textStatus) {
-                    // вешаем свой обработчик на функцию success
-                    console.log(data);
-                    console.log(textStatus);
-                    if (textStatus === "200") {
-                        return data;
-                    } else {
-                        //перерисовываем таблицу
-                        //table.rewrite();
-                    }
-                }
-            });
-        }
-    }]);
-
-    return Sender;
-}();
-
-exports.default = Sender;
 
 /***/ })
 /******/ ]);
