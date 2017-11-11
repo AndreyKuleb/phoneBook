@@ -31,14 +31,35 @@ let baseData =  [
 //     document.getElementById('root')
 //   );
 //console.log(React);
+
+
+
+
 class App extends React.Component{
+
+
+  constructor(props){
+    super(props);
+    this.state = {
+      table: this.props.table,
+      zagolovok: this.props.zagolovok
+    }
+  }
+  
+  updateTable(tableData) {
+    console.log(tableData);
+    this.setState({table: tableData})
+}
+
+
     render() {
+      console.log('render')
       return (
         <div className="app">
           <h1>Телефонная книга</h1>
-          <Table  zagolovok = {zagolovok} table = {baseData}/>
-          <AddForm />
-          <DeleteForm />
+          <Table table = {this.state.table} zagolovok = {this.state.zagolovok} updateTable={this.updateTable.bind(this)}/>
+          <AddForm table={this.state.table} updateTable={this.updateTable.bind(this)} />
+          <DeleteForm table={this.state.table} updateTable={this.updateTable.bind(this)} />
         </div>
       )
     }
@@ -48,7 +69,8 @@ class App extends React.Component{
     constructor(props){
       super(props);
       this.state = {
-        table: this.props.table
+        table: this.props.table,
+        zagolovok: this.props.zagolovok
       }
     }
     componentDidMount(){
@@ -74,7 +96,7 @@ class App extends React.Component{
     }
     render() {
       let zagolovok = this.props.zagolovok;
-      let data = this.state.table;
+      let data = this.props.table;
 
       let tableZagolovok = zagolovok.map((item, index) => {
         return (
@@ -111,11 +133,15 @@ class App extends React.Component{
 
     handleSubmit(e){
       e.preventDefault();
-      // console.log(this.refs);
-      console.log(this.nameInput.value);
-      console.log(this.telInput.value);
-      console.log(this.cityInput.value);
-
+      let oldData = [...this.props.table];
+      console.log(oldData);
+      let newData = {
+        name: this.nameInput.value,
+        telephone: this.telInput.value,
+        city: this.cityInput.value
+      }
+      oldData.push(newData);
+      this.props.updateTable(oldData);
     }
     render() {
       return (
@@ -150,6 +176,7 @@ class App extends React.Component{
       )
     }
   }
+
   class DeleteForm extends React.Component{
     constructor(props) {
       super(props);
@@ -158,8 +185,22 @@ class App extends React.Component{
 
     handleSubmit(e){
       e.preventDefault();
-      // console.log(this.refs);
-      console.log(this.nameInput.value);
+      let table = this.props.table;
+      //console.log(this.props.table);
+      let value = this.nameInput.value;
+      // let result = table.map((item, i, arr) => {
+      //   if (value !== item.name) {
+      //       return item;
+      //   }
+      // }, this)
+      let result = [];
+      table.forEach(function(element, i, arr) {
+        if (value !== element.name) {
+          result.push(element);
+        }
+      }, result);
+      this.props.updateTable(result);
+      console.log(result);
     }
     render() {
       return (
@@ -185,7 +226,7 @@ class App extends React.Component{
 
   window.onload  = () => {
   ReactDOM.render(
-    <App/>,
+    <App table = {baseData} zagolovok = {zagolovok}/>,
     document.getElementById('root')
   );
 }

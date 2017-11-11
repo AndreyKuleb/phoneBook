@@ -1010,6 +1010,8 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -1043,18 +1045,32 @@ var baseData = [{
 //   );
 //console.log(React);
 
+
 var App = function (_React$Component) {
   _inherits(App, _React$Component);
 
-  function App() {
+  function App(props) {
     _classCallCheck(this, App);
 
-    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+
+    _this.state = {
+      table: _this.props.table,
+      zagolovok: _this.props.zagolovok
+    };
+    return _this;
   }
 
   _createClass(App, [{
+    key: 'updateTable',
+    value: function updateTable(tableData) {
+      console.log(tableData);
+      this.setState({ table: tableData });
+    }
+  }, {
     key: 'render',
     value: function render() {
+      console.log('render');
       return _react2.default.createElement(
         'div',
         { className: 'app' },
@@ -1063,9 +1079,9 @@ var App = function (_React$Component) {
           null,
           '\u0422\u0435\u043B\u0435\u0444\u043E\u043D\u043D\u0430\u044F \u043A\u043D\u0438\u0433\u0430'
         ),
-        _react2.default.createElement(Table, { zagolovok: zagolovok, table: baseData }),
-        _react2.default.createElement(AddForm, null),
-        _react2.default.createElement(DeleteForm, null)
+        _react2.default.createElement(Table, { table: this.state.table, zagolovok: this.state.zagolovok, updateTable: this.updateTable.bind(this) }),
+        _react2.default.createElement(AddForm, { table: this.state.table, updateTable: this.updateTable.bind(this) }),
+        _react2.default.createElement(DeleteForm, { table: this.state.table, updateTable: this.updateTable.bind(this) })
       );
     }
   }]);
@@ -1082,7 +1098,8 @@ var Table = function (_React$Component2) {
     var _this2 = _possibleConstructorReturn(this, (Table.__proto__ || Object.getPrototypeOf(Table)).call(this, props));
 
     _this2.state = {
-      table: _this2.props.table
+      table: _this2.props.table,
+      zagolovok: _this2.props.zagolovok
     };
     return _this2;
   }
@@ -1111,7 +1128,7 @@ var Table = function (_React$Component2) {
     key: 'render',
     value: function render() {
       var zagolovok = this.props.zagolovok;
-      var data = this.state.table;
+      var data = this.props.table;
 
       var tableZagolovok = zagolovok.map(function (item, index) {
         return _react2.default.createElement(
@@ -1177,10 +1194,15 @@ var AddForm = function (_React$Component3) {
     key: 'handleSubmit',
     value: function handleSubmit(e) {
       e.preventDefault();
-      // console.log(this.refs);
-      console.log(this.nameInput.value);
-      console.log(this.telInput.value);
-      console.log(this.cityInput.value);
+      var oldData = [].concat(_toConsumableArray(this.props.table));
+      console.log(oldData);
+      var newData = {
+        name: this.nameInput.value,
+        telephone: this.telInput.value,
+        city: this.cityInput.value
+      };
+      oldData.push(newData);
+      this.props.updateTable(oldData);
     }
   }, {
     key: 'render',
@@ -1279,8 +1301,22 @@ var DeleteForm = function (_React$Component4) {
     key: 'handleSubmit',
     value: function handleSubmit(e) {
       e.preventDefault();
-      // console.log(this.refs);
-      console.log(this.nameInput.value);
+      var table = this.props.table;
+      //console.log(this.props.table);
+      var value = this.nameInput.value;
+      // let result = table.map((item, i, arr) => {
+      //   if (value !== item.name) {
+      //       return item;
+      //   }
+      // }, this)
+      var result = [];
+      table.forEach(function (element, i, arr) {
+        if (value !== element.name) {
+          result.push(element);
+        }
+      }, result);
+      this.props.updateTable(result);
+      console.log(result);
     }
   }, {
     key: 'render',
@@ -1332,7 +1368,7 @@ var DeleteForm = function (_React$Component4) {
 }(_react2.default.Component);
 
 window.onload = function () {
-  _reactDom2.default.render(_react2.default.createElement(App, null), document.getElementById('root'));
+  _reactDom2.default.render(_react2.default.createElement(App, { table: baseData, zagolovok: zagolovok }), document.getElementById('root'));
 };
 
 /***/ }),
@@ -21501,3 +21537,4 @@ module.exports = function() {
 
 /***/ })
 /******/ ]);
+//# sourceMappingURL=bundle.js.map
