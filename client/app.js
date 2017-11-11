@@ -9,17 +9,20 @@ let baseData =  [
   {
       name: "Vasya",
       telephone: "89161234567",
-      city: "Moscow"
+      city: "Moscow",
+      fullAdress: "Moscow, Volgogrdadsiy prospect 46"
   },
   {
       name: "Kolya",
       telephone: "89091234567",
-      city: "Saint-Petesburg"
+      city: "Saint-Petesburg",
+      fullAdress: "Saint-Petesburg, Vavilova street 32"
   },
   {
       name: "Tanya",
       telephone: "89267654321",
-      city: "Volgograd"
+      city: "Volgograd",
+      fullAdress: "Volgograd, Lenin street 16"
   }
 ]
 // ReactDOM.render(
@@ -47,10 +50,8 @@ class App extends React.Component{
   }
   
   updateTable(tableData) {
-    console.log(tableData);
     this.setState({table: tableData})
 }
-
 
     render() {
       console.log('render')
@@ -60,6 +61,7 @@ class App extends React.Component{
           <Table table = {this.state.table} zagolovok = {this.state.zagolovok} updateTable={this.updateTable.bind(this)}/>
           <AddForm table={this.state.table} updateTable={this.updateTable.bind(this)} />
           <DeleteForm table={this.state.table} updateTable={this.updateTable.bind(this)} />
+          <InfoForm table={this.state.table} />
         </div>
       )
     }
@@ -218,6 +220,52 @@ class App extends React.Component{
          </tbody>
          </table>
          <input type='submit' value="Удалить" id="deleteBut"></input>
+         </form>
+        </div>
+      )
+    }
+  }
+
+  class InfoForm extends React.Component{
+    constructor(props) {
+      super(props);
+      this.handleSubmit = this.handleSubmit.bind(this);
+      this.state = {
+        contactInfo: this.props.contactInfo
+      }
+    }
+
+    handleSubmit(e){
+      e.preventDefault();
+      let table = this.props.table;
+      let value = this.nameInput.value;
+      let result = [];
+      table.forEach(function(element, i, arr) {
+        if (value === element.name) {
+          result.push(element);
+        }
+      }, result);
+      this.setState({
+        contactInfo:  result[0].fullAdress
+      });
+    }
+    render() {
+      return (
+        <div>
+         <form id="infoForm" className="allborder" onSubmit={this.handleSubmit}>
+         <p>Показать полную информацию о контакте</p>
+         <table>
+         <tbody>
+             <tr>
+                 <td>Имя</td>
+                 <td>
+                     <input name="name" type="text"  ref={(input) => this.nameInput = input}></input>
+                 </td>
+             </tr>
+         </tbody>
+         </table>
+         <input type='submit' value="Показать" id="infoBut"></input>
+         <p>{this.state.contactInfo}</p>
          </form>
         </div>
       )

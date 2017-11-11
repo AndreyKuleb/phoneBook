@@ -1025,15 +1025,18 @@ var zagolovok = ["Имя", "Телефон", "Адрес"];
 var baseData = [{
   name: "Vasya",
   telephone: "89161234567",
-  city: "Moscow"
+  city: "Moscow",
+  fullAdress: "Moscow, Volgogrdadsiy prospect 46"
 }, {
   name: "Kolya",
   telephone: "89091234567",
-  city: "Saint-Petesburg"
+  city: "Saint-Petesburg",
+  fullAdress: "Saint-Petesburg, Vavilova street 32"
 }, {
   name: "Tanya",
   telephone: "89267654321",
-  city: "Volgograd"
+  city: "Volgograd",
+  fullAdress: "Volgograd, Lenin street 16"
 }];
 // ReactDOM.render(
 //     <App>
@@ -1064,7 +1067,6 @@ var App = function (_React$Component) {
   _createClass(App, [{
     key: 'updateTable',
     value: function updateTable(tableData) {
-      console.log(tableData);
       this.setState({ table: tableData });
     }
   }, {
@@ -1081,7 +1083,8 @@ var App = function (_React$Component) {
         ),
         _react2.default.createElement(Table, { table: this.state.table, zagolovok: this.state.zagolovok, updateTable: this.updateTable.bind(this) }),
         _react2.default.createElement(AddForm, { table: this.state.table, updateTable: this.updateTable.bind(this) }),
-        _react2.default.createElement(DeleteForm, { table: this.state.table, updateTable: this.updateTable.bind(this) })
+        _react2.default.createElement(DeleteForm, { table: this.state.table, updateTable: this.updateTable.bind(this) }),
+        _react2.default.createElement(InfoForm, { table: this.state.table })
       );
     }
   }]);
@@ -1365,6 +1368,91 @@ var DeleteForm = function (_React$Component4) {
   }]);
 
   return DeleteForm;
+}(_react2.default.Component);
+
+var InfoForm = function (_React$Component5) {
+  _inherits(InfoForm, _React$Component5);
+
+  function InfoForm(props) {
+    _classCallCheck(this, InfoForm);
+
+    var _this7 = _possibleConstructorReturn(this, (InfoForm.__proto__ || Object.getPrototypeOf(InfoForm)).call(this, props));
+
+    _this7.handleSubmit = _this7.handleSubmit.bind(_this7);
+    _this7.state = {
+      contactInfo: _this7.props.contactInfo
+    };
+    return _this7;
+  }
+
+  _createClass(InfoForm, [{
+    key: 'handleSubmit',
+    value: function handleSubmit(e) {
+      e.preventDefault();
+      var table = this.props.table;
+      var value = this.nameInput.value;
+      var result = [];
+      table.forEach(function (element, i, arr) {
+        if (value === element.name) {
+          result.push(element);
+        }
+      }, result);
+      this.setState({
+        contactInfo: result[0].fullAdress
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this8 = this;
+
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'form',
+          { id: 'infoForm', className: 'allborder', onSubmit: this.handleSubmit },
+          _react2.default.createElement(
+            'p',
+            null,
+            '\u041F\u043E\u043A\u0430\u0437\u0430\u0442\u044C \u043F\u043E\u043B\u043D\u0443\u044E \u0438\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u044E \u043E \u043A\u043E\u043D\u0442\u0430\u043A\u0442\u0435'
+          ),
+          _react2.default.createElement(
+            'table',
+            null,
+            _react2.default.createElement(
+              'tbody',
+              null,
+              _react2.default.createElement(
+                'tr',
+                null,
+                _react2.default.createElement(
+                  'td',
+                  null,
+                  '\u0418\u043C\u044F'
+                ),
+                _react2.default.createElement(
+                  'td',
+                  null,
+                  _react2.default.createElement('input', { name: 'name', type: 'text', ref: function ref(input) {
+                      return _this8.nameInput = input;
+                    } })
+                )
+              )
+            )
+          ),
+          _react2.default.createElement('input', { type: 'submit', value: '\u041F\u043E\u043A\u0430\u0437\u0430\u0442\u044C', id: 'infoBut' }),
+          _react2.default.createElement(
+            'p',
+            null,
+            this.state.contactInfo
+          )
+        )
+      );
+    }
+  }]);
+
+  return InfoForm;
 }(_react2.default.Component);
 
 window.onload = function () {
