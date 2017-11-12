@@ -1004,50 +1004,34 @@ var _reactDom = __webpack_require__(19);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _propTypes = __webpack_require__(15);
+var _info = __webpack_require__(32);
 
-var _propTypes2 = _interopRequireDefault(_propTypes);
+var _table = __webpack_require__(33);
+
+var _table2 = _interopRequireDefault(_table);
+
+var _addForm = __webpack_require__(34);
+
+var _addForm2 = _interopRequireDefault(_addForm);
+
+var _deleteForm = __webpack_require__(35);
+
+var _deleteForm2 = _interopRequireDefault(_deleteForm);
+
+var _infoForm = __webpack_require__(36);
+
+var _infoForm2 = _interopRequireDefault(_infoForm);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
+//import PropTypes from 'prop-types';
 //import TableOfContacts from "./tableOfContacts.js";
 //import Sender from "./sender.js";
-
-var zagolovok = ["Имя", "Адрес", "Телефон"];
-var baseData = [{
-  name: "Vasya",
-  telephone: "89161234567",
-  city: "Moscow",
-  fullAdress: "Moscow, Volgogrdadsiy prospect 46"
-}, {
-  name: "Kolya",
-  telephone: "89091234567",
-  city: "Saint-Petesburg",
-  fullAdress: "Saint-Petesburg, Vavilova street 32"
-}, {
-  name: "Tanya",
-  telephone: "89267654321",
-  city: "Volgograd",
-  fullAdress: "Volgograd, Lenin street 16"
-}];
-// ReactDOM.render(
-//     <App>
-//       <Table />
-//       <AddForm />
-//       <DeleteForm />
-//     </App>,
-//     document.getElementById('root')
-//   );
-//console.log(React);
-
 
 var App = function (_React$Component) {
   _inherits(App, _React$Component);
@@ -1081,10 +1065,10 @@ var App = function (_React$Component) {
           null,
           '\u0422\u0435\u043B\u0435\u0444\u043E\u043D\u043D\u0430\u044F \u043A\u043D\u0438\u0433\u0430'
         ),
-        _react2.default.createElement(Table, { table: this.state.table, zagolovok: this.state.zagolovok, updateTable: this.updateTable.bind(this) }),
-        _react2.default.createElement(AddForm, { table: this.state.table, updateTable: this.updateTable.bind(this) }),
-        _react2.default.createElement(DeleteForm, { table: this.state.table, updateTable: this.updateTable.bind(this) }),
-        _react2.default.createElement(InfoForm, { table: this.state.table, zagolovok: this.state.zagolovok, contactInfo: '' })
+        _react2.default.createElement(_table2.default, { table: this.state.table, zagolovok: this.state.zagolovok, updateTable: this.updateTable.bind(this) }),
+        _react2.default.createElement(_addForm2.default, { table: this.state.table, updateTable: this.updateTable.bind(this) }),
+        _react2.default.createElement(_deleteForm2.default, { table: this.state.table, updateTable: this.updateTable.bind(this) }),
+        _react2.default.createElement(_infoForm2.default, { table: this.state.table, zagolovok: this.state.zagolovok, contactInfo: '' })
       );
     }
   }]);
@@ -1092,384 +1076,8 @@ var App = function (_React$Component) {
   return App;
 }(_react2.default.Component);
 
-var Table = function (_React$Component2) {
-  _inherits(Table, _React$Component2);
-
-  function Table(props) {
-    _classCallCheck(this, Table);
-
-    var _this2 = _possibleConstructorReturn(this, (Table.__proto__ || Object.getPrototypeOf(Table)).call(this, props));
-
-    _this2.state = {
-      table: _this2.props.table,
-      zagolovok: _this2.props.zagolovok
-    };
-    return _this2;
-  }
-
-  _createClass(Table, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      var result = void 0;
-      fetch('/contacts', { method: 'GET' }).then(function (response) {
-        if (response.status !== 200) {
-          console.log('Проблема соединения с сервером. Код ошибки: ' + response.status);
-          return;
-        }
-        response.json().then(function (data) {
-          result = data;
-        });
-      }).catch(function () {
-        console.log('Сервер недоступен. Перезвоните позже. Пип.Пип.Пип.');
-      });
-      console.log(result);
-      if (result) {
-        this.setState({ table: result });
-      }
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var zagolovok = this.props.zagolovok;
-      var data = this.props.table;
-
-      var tableZagolovok = zagolovok.map(function (item, index) {
-        return _react2.default.createElement(
-          'td',
-          { key: index },
-          zagolovok[index]
-        );
-      });
-      var tableData = data.map(function (item, index) {
-        return _react2.default.createElement(
-          'tr',
-          { key: index },
-          _react2.default.createElement(
-            'td',
-            null,
-            data[index].name
-          ),
-          _react2.default.createElement(
-            'td',
-            null,
-            data[index].city
-          ),
-          _react2.default.createElement(
-            'td',
-            null,
-            data[index].telephone
-          )
-        );
-      });
-      return _react2.default.createElement(
-        'table',
-        { className: 'allborder' },
-        _react2.default.createElement(
-          'tbody',
-          null,
-          _react2.default.createElement(
-            'tr',
-            null,
-            tableZagolovok
-          ),
-          tableData
-        )
-      );
-    }
-  }]);
-
-  return Table;
-}(_react2.default.Component);
-
-var AddForm = function (_React$Component3) {
-  _inherits(AddForm, _React$Component3);
-
-  function AddForm(props) {
-    _classCallCheck(this, AddForm);
-
-    var _this3 = _possibleConstructorReturn(this, (AddForm.__proto__ || Object.getPrototypeOf(AddForm)).call(this, props));
-
-    _this3.handleSubmit = _this3.handleSubmit.bind(_this3);
-    return _this3;
-  }
-
-  _createClass(AddForm, [{
-    key: 'handleSubmit',
-    value: function handleSubmit(e) {
-      e.preventDefault();
-      var oldData = [].concat(_toConsumableArray(this.props.table));
-      console.log(oldData);
-      var newData = {
-        name: this.nameInput.value,
-        telephone: this.telInput.value,
-        city: this.cityInput.value
-      };
-      oldData.push(newData);
-      this.props.updateTable(oldData);
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var _this4 = this;
-
-      return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          'form',
-          { id: 'addForm', className: 'allborder', onSubmit: this.handleSubmit },
-          _react2.default.createElement(
-            'p',
-            null,
-            '\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u043A\u043E\u043D\u0442\u0430\u043A\u0442'
-          ),
-          _react2.default.createElement(
-            'table',
-            null,
-            _react2.default.createElement(
-              'tbody',
-              null,
-              _react2.default.createElement(
-                'tr',
-                null,
-                _react2.default.createElement(
-                  'td',
-                  null,
-                  '\u0418\u043C\u044F'
-                ),
-                _react2.default.createElement(
-                  'td',
-                  null,
-                  _react2.default.createElement('input', { name: 'name', type: 'text', ref: function ref(input) {
-                      return _this4.nameInput = input;
-                    } })
-                )
-              ),
-              _react2.default.createElement(
-                'tr',
-                null,
-                _react2.default.createElement(
-                  'td',
-                  null,
-                  '\u0422\u0435\u043B\u0435\u0444\u043E\u043D'
-                ),
-                _react2.default.createElement(
-                  'td',
-                  null,
-                  _react2.default.createElement('input', { name: 'telephone', type: 'text', ref: function ref(input) {
-                      return _this4.telInput = input;
-                    } })
-                )
-              ),
-              _react2.default.createElement(
-                'tr',
-                null,
-                _react2.default.createElement(
-                  'td',
-                  null,
-                  '\u0410\u0434\u0440\u0435\u0441'
-                ),
-                _react2.default.createElement(
-                  'td',
-                  null,
-                  _react2.default.createElement('input', { name: 'city', type: 'text', ref: function ref(input) {
-                      return _this4.cityInput = input;
-                    } })
-                )
-              )
-            )
-          ),
-          _react2.default.createElement('input', { type: 'submit', value: '\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C', id: 'addBut', ref: 'myTestInput' })
-        )
-      );
-    }
-  }]);
-
-  return AddForm;
-}(_react2.default.Component);
-
-var DeleteForm = function (_React$Component4) {
-  _inherits(DeleteForm, _React$Component4);
-
-  function DeleteForm(props) {
-    _classCallCheck(this, DeleteForm);
-
-    var _this5 = _possibleConstructorReturn(this, (DeleteForm.__proto__ || Object.getPrototypeOf(DeleteForm)).call(this, props));
-
-    _this5.handleSubmit = _this5.handleSubmit.bind(_this5);
-    return _this5;
-  }
-
-  _createClass(DeleteForm, [{
-    key: 'handleSubmit',
-    value: function handleSubmit(e) {
-      e.preventDefault();
-      var table = this.props.table;
-      //console.log(this.props.table);
-      var value = this.nameInput.value;
-      // let result = table.map((item, i, arr) => {
-      //   if (value !== item.name) {
-      //       return item;
-      //   }
-      // }, this)
-      var result = [];
-      table.forEach(function (element, i, arr) {
-        if (value !== element.name) {
-          result.push(element);
-        }
-      }, result);
-      this.props.updateTable(result);
-      console.log(result);
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var _this6 = this;
-
-      return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          'form',
-          { id: 'deleteForm', className: 'allborder', onSubmit: this.handleSubmit },
-          _react2.default.createElement(
-            'p',
-            null,
-            '\u0423\u0434\u0430\u043B\u0438\u0442\u044C \u043A\u043E\u043D\u0442\u0430\u043A\u0442'
-          ),
-          _react2.default.createElement(
-            'table',
-            null,
-            _react2.default.createElement(
-              'tbody',
-              null,
-              _react2.default.createElement(
-                'tr',
-                null,
-                _react2.default.createElement(
-                  'td',
-                  null,
-                  '\u0418\u043C\u044F'
-                ),
-                _react2.default.createElement(
-                  'td',
-                  null,
-                  _react2.default.createElement('input', { name: 'name', type: 'text', ref: function ref(input) {
-                      return _this6.nameInput = input;
-                    } })
-                )
-              )
-            )
-          ),
-          _react2.default.createElement('input', { type: 'submit', value: '\u0423\u0434\u0430\u043B\u0438\u0442\u044C', id: 'deleteBut' })
-        )
-      );
-    }
-  }]);
-
-  return DeleteForm;
-}(_react2.default.Component);
-
-var InfoForm = function (_React$Component5) {
-  _inherits(InfoForm, _React$Component5);
-
-  function InfoForm(props) {
-    _classCallCheck(this, InfoForm);
-
-    var _this7 = _possibleConstructorReturn(this, (InfoForm.__proto__ || Object.getPrototypeOf(InfoForm)).call(this, props));
-
-    _this7.handleSubmit = _this7.handleSubmit.bind(_this7);
-    _this7.state = {
-      contactInfo: _this7.props.contactInfo,
-      showInfo: undefined
-    };
-    return _this7;
-  }
-
-  _createClass(InfoForm, [{
-    key: 'handleSubmit',
-    value: function handleSubmit(e) {
-      e.preventDefault();
-      this.state.showInfo = 1;
-      var table = this.props.table;
-      var value = this.nameInput.value;
-      var result = [];
-      table.forEach(function (element, i, arr) {
-        if (value === element.name) {
-          result.push(element);
-        }
-      }, result);
-      console.log(result[0]);
-      this.setState({
-        contactInfo: result[0]
-      });
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var _this8 = this;
-
-      return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          'form',
-          { id: 'infoForm', className: 'allborder', onSubmit: this.handleSubmit },
-          _react2.default.createElement(
-            'p',
-            null,
-            '\u041F\u043E\u043A\u0430\u0437\u0430\u0442\u044C \u043F\u043E\u043B\u043D\u0443\u044E \u0438\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u044E \u043E \u043A\u043E\u043D\u0442\u0430\u043A\u0442\u0435'
-          ),
-          _react2.default.createElement(
-            'table',
-            null,
-            _react2.default.createElement(
-              'tbody',
-              null,
-              _react2.default.createElement(
-                'tr',
-                null,
-                _react2.default.createElement(
-                  'td',
-                  null,
-                  '\u0418\u043C\u044F'
-                ),
-                _react2.default.createElement(
-                  'td',
-                  null,
-                  _react2.default.createElement('input', { name: 'name', type: 'text', ref: function ref(input) {
-                      return _this8.nameInput = input;
-                    } })
-                )
-              )
-            )
-          ),
-          _react2.default.createElement('input', { type: 'submit', value: '\u041F\u043E\u043A\u0430\u0437\u0430\u0442\u044C', id: 'infoBut' }),
-          this.state.showInfo > 0 && _react2.default.createElement(
-            'p',
-            null,
-            this.props.zagolovok[0],
-            ' : ',
-            this.state.contactInfo.name,
-            _react2.default.createElement('br', null),
-            this.props.zagolovok[1],
-            ': ',
-            this.state.contactInfo.telephone,
-            _react2.default.createElement('br', null),
-            this.props.zagolovok[2],
-            ': ',
-            this.state.contactInfo.fullAdress
-          )
-        )
-      );
-    }
-  }]);
-
-  return InfoForm;
-}(_react2.default.Component);
-
 window.onload = function () {
-  _reactDom2.default.render(_react2.default.createElement(App, { table: baseData, zagolovok: zagolovok }), document.getElementById('root'));
+  _reactDom2.default.render(_react2.default.createElement(App, { table: _info.baseData, zagolovok: _info.zagolovok }), document.getElementById('root'));
 };
 
 /***/ }),
@@ -21635,6 +21243,535 @@ module.exports = function() {
   return ReactPropTypes;
 };
 
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var zagolovok = exports.zagolovok = ["Имя", "Адрес", "Телефон"];
+var baseData = exports.baseData = [{
+    name: "Vasya",
+    telephone: "89161234567",
+    city: "Moscow",
+    fullAdress: "Moscow, Volgogrdadsiy prospect 46"
+}, {
+    name: "Kolya",
+    telephone: "89091234567",
+    city: "Saint-Petesburg",
+    fullAdress: "Saint-Petesburg, Vavilova street 32"
+}, {
+    name: "Tanya",
+    telephone: "89267654321",
+    city: "Volgograd",
+    fullAdress: "Volgograd, Lenin street 16"
+}];
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(6);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(19);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Table = function (_React$Component) {
+  _inherits(Table, _React$Component);
+
+  function Table(props) {
+    _classCallCheck(this, Table);
+
+    var _this = _possibleConstructorReturn(this, (Table.__proto__ || Object.getPrototypeOf(Table)).call(this, props));
+
+    _this.state = {
+      table: _this.props.table,
+      zagolovok: _this.props.zagolovok
+    };
+    return _this;
+  }
+
+  _createClass(Table, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var result = void 0;
+      fetch('/contacts', { method: 'GET' }).then(function (response) {
+        if (response.status !== 200) {
+          console.log('Проблема соединения с сервером. Код ошибки: ' + response.status);
+          return;
+        }
+        response.json().then(function (data) {
+          result = data;
+        });
+      }).catch(function () {
+        console.log('Сервер недоступен. Перезвоните позже. Пип.Пип.Пип.');
+      });
+      console.log(result);
+      if (result) {
+        this.setState({ table: result });
+      }
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var zagolovok = this.props.zagolovok;
+      var data = this.props.table;
+
+      var tableZagolovok = zagolovok.map(function (item, index) {
+        return _react2.default.createElement(
+          'td',
+          { key: index },
+          zagolovok[index]
+        );
+      });
+      var tableData = data.map(function (item, index) {
+        return _react2.default.createElement(
+          'tr',
+          { key: index },
+          _react2.default.createElement(
+            'td',
+            null,
+            data[index].name
+          ),
+          _react2.default.createElement(
+            'td',
+            null,
+            data[index].city
+          ),
+          _react2.default.createElement(
+            'td',
+            null,
+            data[index].telephone
+          )
+        );
+      });
+      return _react2.default.createElement(
+        'table',
+        { className: 'allborder' },
+        _react2.default.createElement(
+          'tbody',
+          null,
+          _react2.default.createElement(
+            'tr',
+            null,
+            tableZagolovok
+          ),
+          tableData
+        )
+      );
+    }
+  }]);
+
+  return Table;
+}(_react2.default.Component);
+
+exports.default = Table;
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(6);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(19);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var AddForm = function (_React$Component) {
+    _inherits(AddForm, _React$Component);
+
+    function AddForm(props) {
+        _classCallCheck(this, AddForm);
+
+        var _this = _possibleConstructorReturn(this, (AddForm.__proto__ || Object.getPrototypeOf(AddForm)).call(this, props));
+
+        _this.handleSubmit = _this.handleSubmit.bind(_this);
+        return _this;
+    }
+
+    _createClass(AddForm, [{
+        key: 'handleSubmit',
+        value: function handleSubmit(e) {
+            e.preventDefault();
+            var oldData = [].concat(_toConsumableArray(this.props.table));
+            console.log(oldData);
+            var newData = {
+                name: this.nameInput.value,
+                telephone: this.telInput.value,
+                city: this.cityInput.value
+            };
+            oldData.push(newData);
+            this.props.updateTable(oldData);
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                    'form',
+                    { id: 'addForm', className: 'allborder', onSubmit: this.handleSubmit },
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        '\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u043A\u043E\u043D\u0442\u0430\u043A\u0442'
+                    ),
+                    _react2.default.createElement(
+                        'table',
+                        null,
+                        _react2.default.createElement(
+                            'tbody',
+                            null,
+                            _react2.default.createElement(
+                                'tr',
+                                null,
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    '\u0418\u043C\u044F'
+                                ),
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    _react2.default.createElement('input', { name: 'name', type: 'text', ref: function ref(input) {
+                                            return _this2.nameInput = input;
+                                        } })
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'tr',
+                                null,
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    '\u0422\u0435\u043B\u0435\u0444\u043E\u043D'
+                                ),
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    _react2.default.createElement('input', { name: 'telephone', type: 'text', ref: function ref(input) {
+                                            return _this2.telInput = input;
+                                        } })
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'tr',
+                                null,
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    '\u0410\u0434\u0440\u0435\u0441'
+                                ),
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    _react2.default.createElement('input', { name: 'city', type: 'text', ref: function ref(input) {
+                                            return _this2.cityInput = input;
+                                        } })
+                                )
+                            )
+                        )
+                    ),
+                    _react2.default.createElement('input', { type: 'submit', value: '\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C', id: 'addBut', ref: 'myTestInput' })
+                )
+            );
+        }
+    }]);
+
+    return AddForm;
+}(_react2.default.Component);
+
+exports.default = AddForm;
+
+/***/ }),
+/* 35 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(6);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(19);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var DeleteForm = function (_React$Component) {
+  _inherits(DeleteForm, _React$Component);
+
+  function DeleteForm(props) {
+    _classCallCheck(this, DeleteForm);
+
+    var _this = _possibleConstructorReturn(this, (DeleteForm.__proto__ || Object.getPrototypeOf(DeleteForm)).call(this, props));
+
+    _this.handleSubmit = _this.handleSubmit.bind(_this);
+    return _this;
+  }
+
+  _createClass(DeleteForm, [{
+    key: 'handleSubmit',
+    value: function handleSubmit(e) {
+      e.preventDefault();
+      var table = this.props.table;
+      var value = this.nameInput.value;
+      var result = [];
+      table.forEach(function (element, i, arr) {
+        if (value !== element.name) {
+          result.push(element);
+        }
+      }, result);
+      this.props.updateTable(result);
+      console.log(result);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'form',
+          { id: 'deleteForm', className: 'allborder', onSubmit: this.handleSubmit },
+          _react2.default.createElement(
+            'p',
+            null,
+            '\u0423\u0434\u0430\u043B\u0438\u0442\u044C \u043A\u043E\u043D\u0442\u0430\u043A\u0442'
+          ),
+          _react2.default.createElement(
+            'table',
+            null,
+            _react2.default.createElement(
+              'tbody',
+              null,
+              _react2.default.createElement(
+                'tr',
+                null,
+                _react2.default.createElement(
+                  'td',
+                  null,
+                  '\u0418\u043C\u044F'
+                ),
+                _react2.default.createElement(
+                  'td',
+                  null,
+                  _react2.default.createElement('input', { name: 'name', type: 'text', ref: function ref(input) {
+                      return _this2.nameInput = input;
+                    } })
+                )
+              )
+            )
+          ),
+          _react2.default.createElement('input', { type: 'submit', value: '\u0423\u0434\u0430\u043B\u0438\u0442\u044C', id: 'deleteBut' })
+        )
+      );
+    }
+  }]);
+
+  return DeleteForm;
+}(_react2.default.Component);
+
+exports.default = DeleteForm;
+
+/***/ }),
+/* 36 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(6);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(19);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var InfoForm = function (_React$Component) {
+  _inherits(InfoForm, _React$Component);
+
+  function InfoForm(props) {
+    _classCallCheck(this, InfoForm);
+
+    var _this = _possibleConstructorReturn(this, (InfoForm.__proto__ || Object.getPrototypeOf(InfoForm)).call(this, props));
+
+    _this.handleSubmit = _this.handleSubmit.bind(_this);
+    _this.state = {
+      contactInfo: _this.props.contactInfo,
+      showInfo: undefined
+    };
+    return _this;
+  }
+
+  _createClass(InfoForm, [{
+    key: 'handleSubmit',
+    value: function handleSubmit(e) {
+      e.preventDefault();
+      this.setState({
+        showInfo: 1
+      });
+      var table = this.props.table;
+      var value = this.nameInput.value;
+      var result = [];
+      table.forEach(function (element, i, arr) {
+        if (value === element.name) {
+          result.push(element);
+        }
+      }, result);
+      //console.log(result[0]);
+      if (!result.length) {
+        result.push({});
+      };
+      this.setState({
+        contactInfo: result[0]
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'form',
+          { id: 'infoForm', className: 'allborder', onSubmit: this.handleSubmit },
+          _react2.default.createElement(
+            'p',
+            null,
+            '\u041F\u043E\u043A\u0430\u0437\u0430\u0442\u044C \u043F\u043E\u043B\u043D\u0443\u044E \u0438\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u044E \u043E \u043A\u043E\u043D\u0442\u0430\u043A\u0442\u0435'
+          ),
+          _react2.default.createElement(
+            'table',
+            null,
+            _react2.default.createElement(
+              'tbody',
+              null,
+              _react2.default.createElement(
+                'tr',
+                null,
+                _react2.default.createElement(
+                  'td',
+                  null,
+                  '\u0418\u043C\u044F'
+                ),
+                _react2.default.createElement(
+                  'td',
+                  null,
+                  _react2.default.createElement('input', { name: 'name', type: 'text', ref: function ref(input) {
+                      return _this2.nameInput = input;
+                    } })
+                )
+              )
+            )
+          ),
+          _react2.default.createElement('input', { type: 'submit', value: '\u041F\u043E\u043A\u0430\u0437\u0430\u0442\u044C', id: 'infoBut' }),
+          this.state.showInfo > 0 && _react2.default.createElement(
+            'p',
+            null,
+            this.props.zagolovok[0],
+            ' : ',
+            this.state.contactInfo.name,
+            _react2.default.createElement('br', null),
+            this.props.zagolovok[1],
+            ': ',
+            this.state.contactInfo.fullAdress,
+            _react2.default.createElement('br', null),
+            this.props.zagolovok[2],
+            ':  ',
+            this.state.contactInfo.telephone
+          )
+        )
+      );
+    }
+  }]);
+
+  return InfoForm;
+}(_react2.default.Component);
+
+exports.default = InfoForm;
 
 /***/ })
 /******/ ]);
