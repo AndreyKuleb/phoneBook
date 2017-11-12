@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 //import TableOfContacts from "./tableOfContacts.js";
 //import Sender from "./sender.js";
 
-let zagolovok = ["Имя", "Телефон", "Адрес"];
+let zagolovok = ["Имя", "Адрес", "Телефон"];
 let baseData =  [
   {
       name: "Vasya",
@@ -61,7 +61,7 @@ class App extends React.Component{
           <Table table = {this.state.table} zagolovok = {this.state.zagolovok} updateTable={this.updateTable.bind(this)}/>
           <AddForm table={this.state.table} updateTable={this.updateTable.bind(this)} />
           <DeleteForm table={this.state.table} updateTable={this.updateTable.bind(this)} />
-          <InfoForm table={this.state.table} />
+          <InfoForm table={this.state.table} zagolovok = {this.state.zagolovok} contactInfo=''/>
         </div>
       )
     }
@@ -231,12 +231,14 @@ class App extends React.Component{
       super(props);
       this.handleSubmit = this.handleSubmit.bind(this);
       this.state = {
-        contactInfo: this.props.contactInfo
+        contactInfo: this.props.contactInfo,
+        showInfo: undefined
       }
     }
 
     handleSubmit(e){
       e.preventDefault();
+      this.state.showInfo = 1;
       let table = this.props.table;
       let value = this.nameInput.value;
       let result = [];
@@ -245,8 +247,9 @@ class App extends React.Component{
           result.push(element);
         }
       }, result);
+      console.log(result[0]);
       this.setState({
-        contactInfo:  result[0].fullAdress
+        contactInfo:  result[0]
       });
     }
     render() {
@@ -265,7 +268,15 @@ class App extends React.Component{
          </tbody>
          </table>
          <input type='submit' value="Показать" id="infoBut"></input>
-         <p>{this.state.contactInfo}</p>
+         {
+           this.state.showInfo > 0 && 
+              <p>{this.props.zagolovok[0]} : {this.state.contactInfo.name}
+              <br></br>
+              {this.props.zagolovok[1]}: {this.state.contactInfo.telephone}
+              <br></br>
+              {this.props.zagolovok[2]}: {this.state.contactInfo.fullAdress}      
+         </p>
+         }
          </form>
         </div>
       )

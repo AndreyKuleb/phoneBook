@@ -1021,7 +1021,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 //import TableOfContacts from "./tableOfContacts.js";
 //import Sender from "./sender.js";
 
-var zagolovok = ["Имя", "Телефон", "Адрес"];
+var zagolovok = ["Имя", "Адрес", "Телефон"];
 var baseData = [{
   name: "Vasya",
   telephone: "89161234567",
@@ -1084,7 +1084,7 @@ var App = function (_React$Component) {
         _react2.default.createElement(Table, { table: this.state.table, zagolovok: this.state.zagolovok, updateTable: this.updateTable.bind(this) }),
         _react2.default.createElement(AddForm, { table: this.state.table, updateTable: this.updateTable.bind(this) }),
         _react2.default.createElement(DeleteForm, { table: this.state.table, updateTable: this.updateTable.bind(this) }),
-        _react2.default.createElement(InfoForm, { table: this.state.table })
+        _react2.default.createElement(InfoForm, { table: this.state.table, zagolovok: this.state.zagolovok, contactInfo: '' })
       );
     }
   }]);
@@ -1380,7 +1380,8 @@ var InfoForm = function (_React$Component5) {
 
     _this7.handleSubmit = _this7.handleSubmit.bind(_this7);
     _this7.state = {
-      contactInfo: _this7.props.contactInfo
+      contactInfo: _this7.props.contactInfo,
+      showInfo: undefined
     };
     return _this7;
   }
@@ -1389,6 +1390,7 @@ var InfoForm = function (_React$Component5) {
     key: 'handleSubmit',
     value: function handleSubmit(e) {
       e.preventDefault();
+      this.state.showInfo = 1;
       var table = this.props.table;
       var value = this.nameInput.value;
       var result = [];
@@ -1397,8 +1399,9 @@ var InfoForm = function (_React$Component5) {
           result.push(element);
         }
       }, result);
+      console.log(result[0]);
       this.setState({
-        contactInfo: result[0].fullAdress
+        contactInfo: result[0]
       });
     }
   }, {
@@ -1442,10 +1445,20 @@ var InfoForm = function (_React$Component5) {
             )
           ),
           _react2.default.createElement('input', { type: 'submit', value: '\u041F\u043E\u043A\u0430\u0437\u0430\u0442\u044C', id: 'infoBut' }),
-          _react2.default.createElement(
+          this.state.showInfo > 0 && _react2.default.createElement(
             'p',
             null,
-            this.state.contactInfo
+            this.props.zagolovok[0],
+            ' : ',
+            this.state.contactInfo.name,
+            _react2.default.createElement('br', null),
+            this.props.zagolovok[1],
+            ': ',
+            this.state.contactInfo.telephone,
+            _react2.default.createElement('br', null),
+            this.props.zagolovok[2],
+            ': ',
+            this.state.contactInfo.fullAdress
           )
         )
       );
