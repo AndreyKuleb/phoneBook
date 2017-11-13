@@ -1,12 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 
 import {zagolovok}  from './info.js';
 import {baseData}  from './info.js';
-import Table from './table.js'
-import AddForm from './addForm.js'
-import DeleteForm from './deleteForm.js'
-import InfoForm from './infoForm.js'
+import Table from './table.js';
+import AddForm from './addForm.js';
+import DeleteForm from './deleteForm.js';
+import InfoForm from './infoForm.js';
+
+import contactsApp from './reducers.js'
 
 //Главный класс приложения
 class App extends React.Component{
@@ -40,7 +44,9 @@ class App extends React.Component{
   window.onload  = () => {
   ReactDOM.render(
     //начальные данные берутся из файла info.js
-    <App table = {baseData} zagolovok = {zagolovok}/>,
+    <Provider store={store}>
+    <App table = {baseData} zagolovok = {zagolovok}/>
+    </Provider>,
     document.getElementById('root')
   );
 }
