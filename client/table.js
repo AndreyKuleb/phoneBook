@@ -1,13 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { store } from './app.js';
+import {
+  ADD_CONTACT,
+  DELETE_CONTACT,
+} from './actions.js'
+
+import contactsApp from './reducers.js';
+import {zagolovok}  from './info.js';
 
 export default class Table extends React.Component{
     constructor(props){
       super(props);
-      this.state = {
-        table: this.props.table,
-        zagolovok: this.props.zagolovok
-      }
+      //.store.dispatch(contactsApp(store.getState(), {type: 'ADD_CONTACT', contact: this.props.zagolovok}));
+      //store.dispatch(contactsApp(store.getState(), {type: 'ADD_CONTACT', contact: "vasya"}));
+      // this.state = {
+      //   table: this.props.table,
+      //   zagolovok: this.props.zagolovok
+      // }
     }
     componentDidMount(){
       let result;
@@ -31,8 +41,13 @@ export default class Table extends React.Component{
       }
     }
     render() {
-      let zagolovok = this.props.zagolovok;
-      let data = this.props.table;
+      //let zagolovok = this.state.zagolovok;
+      //let data = this.state.table;
+
+      let data = store.getState();
+      //let zagolovok = data[0];
+      //console.log(zagolovok);
+      //data = data.splice(0,1);
 
       let tableZagolovok = zagolovok.map((item, index) => {
         return (

@@ -12,6 +12,10 @@ import InfoForm from './infoForm.js';
 
 import contactsApp from './reducers.js'
 
+
+export let store = createStore(contactsApp);
+console.log(store.getState())
+
 //Главный класс приложения
 class App extends React.Component{
   constructor(props){

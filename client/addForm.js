@@ -1,6 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import { store } from './app.js';
+import {
+  ADD_CONTACT,
+  DELETE_CONTACT,
+} from './actions.js'
+
+
 export default class AddForm extends React.Component{
     constructor(props) {
       super(props);
@@ -9,13 +16,13 @@ export default class AddForm extends React.Component{
 
     handleSubmit(e){
       e.preventDefault();
-      let oldData = [...this.props.table];
+      //let oldData = [...this.props.table];
       let newData = {
         name: this.nameInput.value,
         telephone: this.telInput.value,
         city: this.cityInput.value
       }
-      oldData.push(newData);
+      //oldData.push(newData);
 
       let result;
       fetch('/contacts', {method: 'PUT', body: oldData})
@@ -33,8 +40,12 @@ export default class AddForm extends React.Component{
         console.log('Сервер недоступен. Перезвоните позже. Пип.Пип.Пип.');
       })
       //данные должны обновляться только в случае получения ответа от сервера
+      //store
+      //console.log(store.getState);
       //if (result){
-        this.props.updateTable(oldData);
+        store.dispatch({type: 'ADD_CONTACT',
+        newData});
+        //this.props.updateTable(oldData);
       //}
     }
     render() {
