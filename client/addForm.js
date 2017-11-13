@@ -10,14 +10,32 @@ export default class AddForm extends React.Component{
     handleSubmit(e){
       e.preventDefault();
       let oldData = [...this.props.table];
-      console.log(oldData);
       let newData = {
         name: this.nameInput.value,
         telephone: this.telInput.value,
         city: this.cityInput.value
       }
       oldData.push(newData);
-      this.props.updateTable(oldData);
+
+      let result;
+      fetch('/contacts', {method: 'PUT', body: oldData})
+      .then((response) => {
+        if (response.status !== 200){
+          console.log('Проблема соединения с сервером. Код ошибки: ' +  
+          response.status);  
+        return;  
+        }
+        response.json().then(function(data) {  
+          result = data; 
+        })  
+      })
+      .catch(() => {
+        console.log('Сервер недоступен. Перезвоните позже. Пип.Пип.Пип.');
+      })
+      //данные должны обновляться только в случае получения ответа от сервера
+      //if (result){
+        this.props.updateTable(oldData);
+      //}
     }
     render() {
       return (

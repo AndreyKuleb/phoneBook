@@ -1,8 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-//import PropTypes from 'prop-types';
-//import TableOfContacts from "./tableOfContacts.js";
-//import Sender from "./sender.js";
 
 import {zagolovok}  from './info.js';
 import {baseData}  from './info.js';
@@ -11,6 +8,7 @@ import AddForm from './addForm.js'
 import DeleteForm from './deleteForm.js'
 import InfoForm from './infoForm.js'
 
+//Главный класс приложения
 class App extends React.Component{
   constructor(props){
     super(props);
@@ -20,12 +18,13 @@ class App extends React.Component{
     }
   }
   
+  //функция, обновляющая данные таблицы
   updateTable(tableData) {
+
     this.setState({table: tableData})
 }
 
     render() {
-      console.log('render')
       return (
         <div className="app">
           <h1>Телефонная книга</h1>
@@ -40,6 +39,7 @@ class App extends React.Component{
 
   window.onload  = () => {
   ReactDOM.render(
+    //начальные данные берутся из файла info.js
     <App table = {baseData} zagolovok = {zagolovok}/>,
     document.getElementById('root')
   );

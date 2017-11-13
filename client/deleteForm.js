@@ -17,8 +17,25 @@ export default class DeleteForm extends React.Component{
           result.push(element);
         }
       }, result);
+      let aswerData;
+      fetch('/contacts', {method: 'PUT', body: result})
+      .then((response) => {
+        if (response.status !== 200){
+          console.log('Проблема соединения с сервером. Код ошибки: ' +  
+          response.status);  
+        return;  
+        }
+        response.json().then(function(data) {  
+          aswerData = data; 
+        })  
+      })
+      .catch(() => {
+        console.log('Сервер недоступен. Перезвоните позже. Пип.Пип.Пип.');
+      })
+      //данные должны обновляться только в случае получения ответа от сервера
+      //if (aswerData){
       this.props.updateTable(result);
-      console.log(result);
+      //}
     }
     render() {
       return (

@@ -25,7 +25,7 @@ export default class Table extends React.Component{
       .catch(() => {
         console.log('Сервер недоступен. Перезвоните позже. Пип.Пип.Пип.');
       })
-      console.log(result);
+      //данные, полученные от сервера, должны заменить заглушку
       if (result){
         this.setState({table: result});
       }
