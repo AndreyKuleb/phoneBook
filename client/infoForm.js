@@ -28,8 +28,13 @@ class InfoForm extends React.Component{
           result.push(element);
         }
       }, result);
-      //console.log(result[0]);
-      if (!result.length){result.push({})};
+
+      if (!result.length){
+        result.push({});
+        this.setState({
+          showInfo: 0
+        });
+      };
       this.setState({
         contactInfo:  result[0]
       });

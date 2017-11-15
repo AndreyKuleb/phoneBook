@@ -2027,6 +2027,7 @@ exports.deleteContact = deleteContact;
 //export const SHOW_CONTACTS = 'SHOW_CONTACTS'
 var ADD_CONTACT = 'ADD_CONTACT';
 var DELETE_CONTACT = 'DELETE_CONTACT';
+
 exports.ADD_CONTACT = ADD_CONTACT;
 exports.DELETE_CONTACT = DELETE_CONTACT;
 
@@ -2070,23 +2071,12 @@ function contactsApp() {
 
     switch (action.type) {
         case _actions.DELETE_CONTACT:
-            console.log("something");
-            console.log([].concat(_toConsumableArray(state.filter(function (item) {
-                return item.name === action.contactName;
-            }))));
             return [].concat(_toConsumableArray(state.filter(function (item) {
                 return item.name !== action.contactName;
             })));
         case _actions.ADD_CONTACT:
-            return [].concat(_toConsumableArray(state), [action.contact
-            // {
-            //     name: action.name,
-            //     telephone: action.telephone,
-            //     city: action.city
-            // }
-            ]);
+            return [].concat(_toConsumableArray(state), [action.contact]);
         default:
-            console.log("something2");
             return state;
     }
 }
@@ -2142,8 +2132,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-//console.log(store.getState())
-
 //Главный класс приложения
 var App = function (_React$Component) {
   _inherits(App, _React$Component);
@@ -2159,11 +2147,6 @@ var App = function (_React$Component) {
     };
     return _this;
   }
-
-  //функция, обновляющая данные таблицы
-  //   updateTable(tableData) {
-  //     this.setState({table: tableData})
-  // }
 
   _createClass(App, [{
     key: 'render',
@@ -23644,8 +23627,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-//import {store} from './app.js';
-
 
 var Table = function (_React$Component) {
   _inherits(Table, _React$Component);
@@ -23654,12 +23635,6 @@ var Table = function (_React$Component) {
     _classCallCheck(this, Table);
 
     return _possibleConstructorReturn(this, (Table.__proto__ || Object.getPrototypeOf(Table)).call(this, props));
-    //.store.dispatch(contactsApp(store.getState(), {type: 'ADD_CONTACT', contact: this.props.zagolovok}));
-    //store.dispatch(contactsApp(store.getState(), {type: 'ADD_CONTACT', contact: "vasya"}));
-    // this.state = {
-    //   table: this.props.table,
-    //   zagolovok: this.props.zagolovok
-    // }
   }
 
   _createClass(Table, [{
@@ -23679,20 +23654,14 @@ var Table = function (_React$Component) {
       });
       //данные, полученные от сервера, должны заменить заглушку
       if (result) {
-        //this.setState({table: result});
         //this.props.updateTable(result);
       }
     }
   }, {
     key: 'render',
     value: function render() {
-      //let zagolovok = this.state.zagolovok;
-      //let data = this.state.table;
 
       var data = this.props.table;
-      //let zagolovok = data[0];
-      //console.log(zagolovok);
-      //data = data.splice(0,1);
 
       var tableZagolovok = _info.zagolovok.map(function (item, index) {
         return _react2.default.createElement(
@@ -23722,7 +23691,7 @@ var Table = function (_React$Component) {
           )
         );
       });
-      //let tableData = <tr><td></td></tr>;
+
       return _react2.default.createElement(
         'table',
         { className: 'allborder' },
@@ -23824,14 +23793,8 @@ var AddForm = function (_React$Component) {
       }).catch(function () {
         console.log('Сервер недоступен. Перезвоните позже. Пип.Пип.Пип.');
       });
-      //данные должны обновляться только в случае получения ответа от сервера
-      //store
-      //console.log(store.getState);
-      //if (result){
-      //store.dispatch({type: 'ADD_CONTACT', newData});
-      //console.log(newData);
+
       this.props.addContact(newData);
-      //}
     }
   }, {
     key: 'render',
@@ -24003,7 +23966,6 @@ var DeleteForm = function (_React$Component) {
       });
       //данные должны обновляться только в случае получения ответа от сервера
       //if (aswerData){
-      console.log(contactName);
       this.props.deleteContact(contactName);
       //}
     }
@@ -24140,9 +24102,12 @@ var InfoForm = function (_React$Component) {
           result.push(element);
         }
       }, result);
-      //console.log(result[0]);
+
       if (!result.length) {
         result.push({});
+        this.setState({
+          showInfo: 0
+        });
       };
       this.setState({
         contactInfo: result[0]

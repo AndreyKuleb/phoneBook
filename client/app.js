@@ -3,16 +3,13 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 
-import {zagolovok}  from './info.js';
-import {baseData}  from './info.js';
+import {zagolovok, baseData}  from './info.js';
 import TableContainer from './table.js';
 import AddFormContainer from './addForm.js';
 import DeleteFormContainer from './deleteForm.js';
 import InfoFormContainer from './infoForm.js';
-
 import contactsApp from './reducers.js'
 
-//console.log(store.getState())
 
 //Главный класс приложения
 class App extends React.Component{
@@ -24,11 +21,6 @@ class App extends React.Component{
     }
   }
   
-  //функция, обновляющая данные таблицы
-//   updateTable(tableData) {
-//     this.setState({table: tableData})
-// }
-
     render() {
       return (
         <div className="app">

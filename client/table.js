@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-//import {store} from './app.js';
-import {ADD_CONTACT, DELETE_CONTACT} from './actions.js'
 
+import {ADD_CONTACT, DELETE_CONTACT} from './actions.js'
 import contactsApp from './reducers.js';
 import {zagolovok}  from './info.js';
 import {connect} from 'react-redux';
@@ -10,12 +9,6 @@ import {connect} from 'react-redux';
 class Table extends React.Component{
     constructor(props){
       super(props);
-      //.store.dispatch(contactsApp(store.getState(), {type: 'ADD_CONTACT', contact: this.props.zagolovok}));
-      //store.dispatch(contactsApp(store.getState(), {type: 'ADD_CONTACT', contact: "vasya"}));
-      // this.state = {
-      //   table: this.props.table,
-      //   zagolovok: this.props.zagolovok
-      // }
     }
     componentDidMount(){
       let result;
@@ -35,18 +28,12 @@ class Table extends React.Component{
       })
       //данные, полученные от сервера, должны заменить заглушку
       if (result){
-        //this.setState({table: result});
         //this.props.updateTable(result);
       }
     }
     render() {
-      //let zagolovok = this.state.zagolovok;
-      //let data = this.state.table;
 
       let data = this.props.table;
-      //let zagolovok = data[0];
-      //console.log(zagolovok);
-      //data = data.splice(0,1);
 
       let tableZagolovok = zagolovok.map((item, index) => {
         return (
@@ -62,7 +49,7 @@ class Table extends React.Component{
           </tr>
         )
       })
-      //let tableData = <tr><td></td></tr>;
+
       return (
         <table className="allborder">
            <tbody>

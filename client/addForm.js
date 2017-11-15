@@ -36,14 +36,9 @@ class AddForm extends React.Component{
       .catch(() => {
         console.log('Сервер недоступен. Перезвоните позже. Пип.Пип.Пип.');
       })
-      //данные должны обновляться только в случае получения ответа от сервера
-      //store
-      //console.log(store.getState);
-      //if (result){
-        //store.dispatch({type: 'ADD_CONTACT', newData});
-        //console.log(newData);
-        this.props.addContact(newData);
-      //}
+
+      this.props.addContact(newData);
+
     }
     render() {
       return (

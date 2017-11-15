@@ -39,7 +39,6 @@ class DeleteForm extends React.Component{
       })
       //данные должны обновляться только в случае получения ответа от сервера
       //if (aswerData){
-        console.log(contactName);
       this.props.deleteContact(contactName);
       //}
     }
