@@ -5,16 +5,17 @@ import { createStore } from 'redux';
 
 import {zagolovok}  from './info.js';
 import {baseData}  from './info.js';
-import Table from './table.js';
-import AddForm from './addForm.js';
+import TableContainer from './table.js';
+import AddFormContainer from './addForm.js';
 import DeleteForm from './deleteForm.js';
 import InfoForm from './infoForm.js';
 
 import contactsApp from './reducers.js'
 
 
-export let store = createStore(contactsApp);
-console.log(store.getState())
+
+
+//console.log(store.getState())
 
 //Главный класс приложения
 class App extends React.Component{
@@ -27,29 +28,29 @@ class App extends React.Component{
   }
   
   //функция, обновляющая данные таблицы
-  updateTable(tableData) {
-
-    this.setState({table: tableData})
-}
+//   updateTable(tableData) {
+//     this.setState({table: tableData})
+// }
 
     render() {
       return (
         <div className="app">
           <h1>Телефонная книга</h1>
-          <Table table = {this.state.table} zagolovok = {this.state.zagolovok} updateTable={this.updateTable.bind(this)}/>
-          <AddForm table={this.state.table} updateTable={this.updateTable.bind(this)} />
-          <DeleteForm table={this.state.table} updateTable={this.updateTable.bind(this)} />
-          <InfoForm table={this.state.table} zagolovok = {this.state.zagolovok} contactInfo=''/>
+          <TableContainer />
+          <AddFormContainer />
+          <DeleteForm />
+          <InfoForm />
         </div>
       )
     }
   }
 
   window.onload  = () => {
+  let store = createStore(contactsApp, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
   ReactDOM.render(
     //начальные данные берутся из файла info.js
     <Provider store={store}>
-    <App table = {baseData} zagolovok = {zagolovok}/>
+      <App table = {baseData} zagolovok = {zagolovok} />
     </Provider>,
     document.getElementById('root')
   );

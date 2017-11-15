@@ -1,7 +1,4 @@
-import {
-    ADD_CONTACT,
-    DELETE_CONTACT,
-  } from './actions.js'
+import {ADD_CONTACT, DELETE_CONTACT} from './actions.js'
 
   import {baseData} from './info.js';
 
@@ -14,12 +11,12 @@ import {
             })
         );
         case ADD_CONTACT:
-            return [...state, 
-                {
-                    name: action.newData.name,
-                    telephone: action.newData.telephone,
-                    city: action.newData.city
-                }
+            return [...state, action.newData
+                // {
+                //     name: action.name,
+                //     telephone: action.telephone,
+                //     city: action.city
+                // }
             ];
         default:
             return state;

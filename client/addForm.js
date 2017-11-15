@@ -1,14 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {connect} from 'react-redux';
 
-import { store } from './app.js';
-import {
-  ADD_CONTACT,
-  DELETE_CONTACT,
-} from './actions.js'
+//import {store} from './app.js';
+export const ADD_CONTACT = 'ADD_CONTACT';
+export const DELETE_CONTACT = ' DELETE_CONTACT';
 
 
-export default class AddForm extends React.Component{
+class AddForm extends React.Component{
     constructor(props) {
       super(props);
       this.handleSubmit = this.handleSubmit.bind(this);
@@ -16,13 +15,13 @@ export default class AddForm extends React.Component{
 
     handleSubmit(e){
       e.preventDefault();
-      //let oldData = [...this.props.table];
+      let oldData = [...this.props.table];
       let newData = {
         name: this.nameInput.value,
         telephone: this.telInput.value,
         city: this.cityInput.value
       }
-      //oldData.push(newData);
+      oldData.push(newData);
 
       let result;
       fetch('/contacts', {method: 'PUT', body: oldData})
@@ -43,9 +42,9 @@ export default class AddForm extends React.Component{
       //store
       //console.log(store.getState);
       //if (result){
-        store.dispatch({type: 'ADD_CONTACT',
-        newData});
-        //this.props.updateTable(oldData);
+        //store.dispatch({type: 'ADD_CONTACT', newData});
+        console.log(newData);
+        this.props.updateTable(newData);
       //}
     }
     render() {
@@ -81,3 +80,22 @@ export default class AddForm extends React.Component{
       )
     }
   }
+
+  const mapStateToProps = (state) => {
+    console.log(state);
+    return {
+      table: state
+    }
+  }
+
+  const mapDispatchToProps = function(dispatch, newData) {
+    return {
+      updateTable: (newData) => {
+        dispatch({type: 'ADD_CONTACT', newData});
+      }
+    }
+  }
+  
+  
+const AddFormContainer = connect(mapStateToProps, mapDispatchToProps)(AddForm);
+  export default AddFormContainer;

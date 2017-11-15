@@ -1,15 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { store } from './app.js';
-import {
-  ADD_CONTACT,
-  DELETE_CONTACT,
-} from './actions.js'
+//import {store} from './app.js';
+import {ADD_CONTACT, DELETE_CONTACT} from './actions.js'
 
 import contactsApp from './reducers.js';
 import {zagolovok}  from './info.js';
+import {connect} from 'react-redux';
 
-export default class Table extends React.Component{
+class Table extends React.Component{
     constructor(props){
       super(props);
       //.store.dispatch(contactsApp(store.getState(), {type: 'ADD_CONTACT', contact: this.props.zagolovok}));
@@ -37,14 +35,15 @@ export default class Table extends React.Component{
       })
       //данные, полученные от сервера, должны заменить заглушку
       if (result){
-        this.setState({table: result});
+        //this.setState({table: result});
+        this.props.updateTable(result);
       }
     }
     render() {
       //let zagolovok = this.state.zagolovok;
       //let data = this.state.table;
 
-      let data = store.getState();
+      let data = this.props.table;
       //let zagolovok = data[0];
       //console.log(zagolovok);
       //data = data.splice(0,1);
@@ -63,6 +62,7 @@ export default class Table extends React.Component{
           </tr>
         )
       })
+      //let tableData = <tr><td></td></tr>;
       return (
         <table className="allborder">
            <tbody>
@@ -75,3 +75,15 @@ export default class Table extends React.Component{
       )
     }
   }
+
+  const mapStateToProps = (state) => {
+    console.log(state);
+    return {
+      table: state
+    }
+  }
+
+
+  
+const TableContainer = connect(mapStateToProps)(Table);
+  export default TableContainer;
