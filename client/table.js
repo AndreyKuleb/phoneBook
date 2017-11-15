@@ -36,7 +36,7 @@ class Table extends React.Component{
       //данные, полученные от сервера, должны заменить заглушку
       if (result){
         //this.setState({table: result});
-        this.props.updateTable(result);
+        //this.props.updateTable(result);
       }
     }
     render() {

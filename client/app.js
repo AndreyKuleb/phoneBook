@@ -7,13 +7,10 @@ import {zagolovok}  from './info.js';
 import {baseData}  from './info.js';
 import TableContainer from './table.js';
 import AddFormContainer from './addForm.js';
-import DeleteForm from './deleteForm.js';
-import InfoForm from './infoForm.js';
+import DeleteFormContainer from './deleteForm.js';
+import InfoFormContainer from './infoForm.js';
 
 import contactsApp from './reducers.js'
-
-
-
 
 //console.log(store.getState())
 
@@ -38,8 +35,8 @@ class App extends React.Component{
           <h1>Телефонная книга</h1>
           <TableContainer />
           <AddFormContainer />
-          <DeleteForm />
-          <InfoForm />
+          <DeleteFormContainer />
+          <InfoFormContainer />
         </div>
       )
     }

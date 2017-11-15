@@ -6,12 +6,11 @@ import {ADD_CONTACT, DELETE_CONTACT} from './actions.js'
   export default function contactsApp(state = initialState, action) {
     switch (action.type) {
         case DELETE_CONTACT:
-            return Object.assign({}, state, state.filter((item) => {
-                return item.name !== action.contactName;
-            })
-        );
+            console.log("something");
+            console.log( ([...(state.filter((item) => { return item.name === action.contactName;}))]));
+            return ([...(state.filter((item) => { return item.name !== action.contactName;}))]);
         case ADD_CONTACT:
-            return [...state, action.newData
+            return [...state, action.contact
                 // {
                 //     name: action.name,
                 //     telephone: action.telephone,
@@ -19,6 +18,7 @@ import {ADD_CONTACT, DELETE_CONTACT} from './actions.js'
                 // }
             ];
         default:
+            console.log("something2");
             return state;
     }
 }

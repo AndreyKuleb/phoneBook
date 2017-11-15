@@ -1,7 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {connect} from 'react-redux';
 
-export default class DeleteForm extends React.Component{
+
+import {ADD_CONTACT, DELETE_CONTACT} from './actions.js'
+
+
+class DeleteForm extends React.Component{
     constructor(props) {
       super(props);
       this.handleSubmit = this.handleSubmit.bind(this);
@@ -10,10 +15,10 @@ export default class DeleteForm extends React.Component{
     handleSubmit(e){
       e.preventDefault();
       let table = this.props.table;
-      let value = this.nameInput.value;
+      let contactName= this.nameInput.value;
       let result = [];
       table.forEach(function(element, i, arr) {
-        if (value !== element.name) {
+        if (contactName !== element.name) {
           result.push(element);
         }
       }, result);
@@ -34,7 +39,8 @@ export default class DeleteForm extends React.Component{
       })
       //данные должны обновляться только в случае получения ответа от сервера
       //if (aswerData){
-      this.props.updateTable(result);
+        console.log(contactName);
+      this.props.deleteContact(contactName);
       //}
     }
     render() {
@@ -58,3 +64,22 @@ export default class DeleteForm extends React.Component{
       )
     }
   }
+
+  const mapStateToProps = (state) => {
+    console.log(state);
+    return {
+      table: state
+    }
+  }
+
+  const mapDispatchToProps = function(dispatch, contactName) {
+    return {
+      deleteContact: (contactName) => {
+        dispatch({type: 'DELETE_CONTACT', contactName});
+      }
+    }
+  }
+  
+  
+const DeleteFormContainer = connect(mapStateToProps, mapDispatchToProps)(DeleteForm);
+  export default DeleteFormContainer;

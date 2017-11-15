@@ -3,8 +3,10 @@
  */
 
 //export const SHOW_CONTACTS = 'SHOW_CONTACTS'
-export const ADD_CONTACT = 'ADD_CONTACT';
-export const DELETE_CONTACT = ' DELETE_CONTACT';
+const ADD_CONTACT = 'ADD_CONTACT';
+const DELETE_CONTACT = 'DELETE_CONTACT';
+export {ADD_CONTACT, DELETE_CONTACT}
+
 //export const UPDATE_TABLE
 
 

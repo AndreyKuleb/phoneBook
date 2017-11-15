@@ -1,7 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {connect} from 'react-redux';
+import {zagolovok}  from './info.js';
 
-export default class InfoForm extends React.Component{
+import {ADD_CONTACT, DELETE_CONTACT} from './actions.js'
+
+class InfoForm extends React.Component{
     constructor(props) {
       super(props);
       this.handleSubmit = this.handleSubmit.bind(this);
@@ -48,11 +52,11 @@ export default class InfoForm extends React.Component{
          <input type='submit' value="Показать" id="infoBut"></input>
          {
            this.state.showInfo > 0 && 
-              <p>{this.props.zagolovok[0]} : {this.state.contactInfo.name}
+              <p>{zagolovok[0]} : {this.state.contactInfo.name}
               <br></br>
-              {this.props.zagolovok[1]}: {this.state.contactInfo.fullAdress} 
+              {zagolovok[1]}: {this.state.contactInfo.fullAdress} 
               <br></br>
-              {this.props.zagolovok[2]}:  {this.state.contactInfo.telephone}    
+              {zagolovok[2]}:  {this.state.contactInfo.telephone}    
          </p>
          }
          </form>
@@ -60,3 +64,15 @@ export default class InfoForm extends React.Component{
       )
     }
   }
+
+  const mapStateToProps = (state) => {
+    console.log(state);
+    return {
+      table: state
+    }
+  }
+
+  
+  
+const InfoFormContainer = connect(mapStateToProps)(InfoForm);
+  export default InfoFormContainer;

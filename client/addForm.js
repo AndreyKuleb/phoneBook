@@ -2,9 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {connect} from 'react-redux';
 
-//import {store} from './app.js';
-export const ADD_CONTACT = 'ADD_CONTACT';
-export const DELETE_CONTACT = ' DELETE_CONTACT';
+import {ADD_CONTACT, DELETE_CONTACT} from './actions.js'
 
 
 class AddForm extends React.Component{
@@ -43,8 +41,8 @@ class AddForm extends React.Component{
       //console.log(store.getState);
       //if (result){
         //store.dispatch({type: 'ADD_CONTACT', newData});
-        console.log(newData);
-        this.props.updateTable(newData);
+        //console.log(newData);
+        this.props.addContact(newData);
       //}
     }
     render() {
@@ -88,10 +86,10 @@ class AddForm extends React.Component{
     }
   }
 
-  const mapDispatchToProps = function(dispatch, newData) {
+  const mapDispatchToProps = function(dispatch, contact) {
     return {
-      updateTable: (newData) => {
-        dispatch({type: 'ADD_CONTACT', newData});
+      addContact: (contact) => {
+        dispatch({type: 'ADD_CONTACT', contact});
       }
     }
   }
