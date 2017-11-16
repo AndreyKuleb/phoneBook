@@ -15,10 +15,6 @@ import contactsApp from './reducers.js'
 class App extends React.Component{
   constructor(props){
     super(props);
-    this.state = {
-      table: this.props.table,
-      zagolovok: this.props.zagolovok
-    }
   }
   
     render() {
@@ -39,7 +35,7 @@ class App extends React.Component{
   ReactDOM.render(
     //начальные данные берутся из файла info.js
     <Provider store={store}>
-      <App table = {baseData} zagolovok = {zagolovok} />
+      <App />
     </Provider>,
     document.getElementById('root')
   );
