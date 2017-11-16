@@ -64,7 +64,6 @@ class Table extends React.Component{
   }
 
   const mapStateToProps = (state) => {
-    console.log(state);
     return {
       table: state
     }

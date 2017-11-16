@@ -71,7 +71,6 @@ class InfoForm extends React.Component{
   }
 
   const mapStateToProps = (state) => {
-    console.log(state);
     return {
       table: state
     }
