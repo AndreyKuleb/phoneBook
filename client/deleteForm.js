@@ -10,12 +10,22 @@ class DeleteForm extends React.Component{
     constructor(props) {
       super(props);
       this.handleSubmit = this.handleSubmit.bind(this);
+      this.handleChange = this.handleChange.bind(this);
+      this.state = {
+        nameInput: "",
+      }
+    }
+
+    handleChange(e){
+          this.setState({
+            nameInput: e.target.value,
+          })  
     }
 
     handleSubmit(e){
       e.preventDefault();
       let table = this.props.table;
-      let contactName= this.nameInput.value;
+      let contactName= this.state.nameInput;
       let result = [];
       table.forEach(function(element, i, arr) {
         if (contactName !== element.name) {
@@ -52,7 +62,7 @@ class DeleteForm extends React.Component{
              <tr>
                  <td>Имя</td>
                  <td>
-                     <input name="name" type="text"  ref={(input) => this.nameInput = input}></input>
+                     <input name="name" type="text" value={this.state.nameInput} onChange={this.handleChange}></input>
                  </td>
              </tr>
          </tbody>

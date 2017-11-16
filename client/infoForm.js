@@ -9,19 +9,23 @@ class InfoForm extends React.Component{
     constructor(props) {
       super(props);
       this.handleSubmit = this.handleSubmit.bind(this);
+      this.handleChange = this.handleChange.bind(this);
       this.state = {
-        contactInfo: this.props.contactInfo,
-        showInfo: undefined
+        showInfo: undefined,
+        nameInput: ""
       }
+    }
+
+    handleChange(e){
+      this.setState({
+        nameInput: e.target.value,
+      })  
     }
 
     handleSubmit(e){
       e.preventDefault();
-      this.setState({
-        showInfo: 1
-      });
       let table = this.props.table;
-      let value = this.nameInput.value;
+      let value = this.state.nameInput;
       let result = [];
       table.forEach(function(element, i, arr) {
         if (value === element.name) {
@@ -30,14 +34,17 @@ class InfoForm extends React.Component{
       }, result);
 
       if (!result.length){
-        result.push({});
+        //result.push({});
         this.setState({
           showInfo: 0
         });
-      };
+      }
+      else {
       this.setState({
+        showInfo: 1,
         contactInfo:  result[0]
       });
+    }
     }
     render() {
       return (
@@ -49,7 +56,7 @@ class InfoForm extends React.Component{
              <tr>
                  <td>Имя</td>
                  <td>
-                     <input name="name" type="text"  ref={(input) => this.nameInput = input}></input>
+                     <input name="name" type="text" value={this.state.nameInput} onChange={this.handleChange}></input>
                  </td>
              </tr>
          </tbody>

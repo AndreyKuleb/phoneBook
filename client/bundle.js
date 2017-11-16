@@ -23759,18 +23759,45 @@ var AddForm = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (AddForm.__proto__ || Object.getPrototypeOf(AddForm)).call(this, props));
 
     _this.handleSubmit = _this.handleSubmit.bind(_this);
+    _this.handleChange = _this.handleChange.bind(_this);
+    _this.state = {
+      nameInput: "",
+      telInput: "",
+      cityInput: ""
+    };
     return _this;
   }
 
   _createClass(AddForm, [{
+    key: 'handleChange',
+    value: function handleChange(e) {
+      switch (e.target.name) {
+        case "name":
+          this.setState({
+            nameInput: e.target.value
+          });
+          break;
+        case "telephone":
+          this.setState({
+            telInput: e.target.value
+          });
+          break;
+        case "city":
+          this.setState({
+            cityInput: e.target.value
+          });
+          break;
+      }
+    }
+  }, {
     key: 'handleSubmit',
     value: function handleSubmit(e) {
       e.preventDefault();
       var oldData = [].concat(_toConsumableArray(this.props.table));
       var newData = {
-        name: this.nameInput.value,
-        telephone: this.telInput.value,
-        city: this.cityInput.value
+        name: this.state.nameInput,
+        telephone: this.state.telInput,
+        city: this.state.cityInput
       };
       oldData.push(newData);
 
@@ -23792,8 +23819,6 @@ var AddForm = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
-
       return _react2.default.createElement(
         'div',
         null,
@@ -23822,9 +23847,7 @@ var AddForm = function (_React$Component) {
                 _react2.default.createElement(
                   'td',
                   null,
-                  _react2.default.createElement('input', { name: 'name', type: 'text', ref: function ref(input) {
-                      return _this2.nameInput = input;
-                    } })
+                  _react2.default.createElement('input', { name: 'name', type: 'text', value: this.state.nameInput, onChange: this.handleChange })
                 )
               ),
               _react2.default.createElement(
@@ -23838,9 +23861,7 @@ var AddForm = function (_React$Component) {
                 _react2.default.createElement(
                   'td',
                   null,
-                  _react2.default.createElement('input', { name: 'telephone', type: 'text', ref: function ref(input) {
-                      return _this2.telInput = input;
-                    } })
+                  _react2.default.createElement('input', { name: 'telephone', type: 'text', value: this.state.telInput, onChange: this.handleChange })
                 )
               ),
               _react2.default.createElement(
@@ -23854,9 +23875,7 @@ var AddForm = function (_React$Component) {
                 _react2.default.createElement(
                   'td',
                   null,
-                  _react2.default.createElement('input', { name: 'city', type: 'text', ref: function ref(input) {
-                      return _this2.cityInput = input;
-                    } })
+                  _react2.default.createElement('input', { name: 'city', type: 'text', value: this.state.cityInput, onChange: this.handleChange })
                 )
               )
             )
@@ -23929,15 +23948,26 @@ var DeleteForm = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (DeleteForm.__proto__ || Object.getPrototypeOf(DeleteForm)).call(this, props));
 
     _this.handleSubmit = _this.handleSubmit.bind(_this);
+    _this.handleChange = _this.handleChange.bind(_this);
+    _this.state = {
+      nameInput: ""
+    };
     return _this;
   }
 
   _createClass(DeleteForm, [{
+    key: 'handleChange',
+    value: function handleChange(e) {
+      this.setState({
+        nameInput: e.target.value
+      });
+    }
+  }, {
     key: 'handleSubmit',
     value: function handleSubmit(e) {
       e.preventDefault();
       var table = this.props.table;
-      var contactName = this.nameInput.value;
+      var contactName = this.state.nameInput;
       var result = [];
       table.forEach(function (element, i, arr) {
         if (contactName !== element.name) {
@@ -23964,8 +23994,6 @@ var DeleteForm = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
-
       return _react2.default.createElement(
         'div',
         null,
@@ -23994,9 +24022,7 @@ var DeleteForm = function (_React$Component) {
                 _react2.default.createElement(
                   'td',
                   null,
-                  _react2.default.createElement('input', { name: 'name', type: 'text', ref: function ref(input) {
-                      return _this2.nameInput = input;
-                    } })
+                  _react2.default.createElement('input', { name: 'name', type: 'text', value: this.state.nameInput, onChange: this.handleChange })
                 )
               )
             )
@@ -24071,22 +24097,27 @@ var InfoForm = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (InfoForm.__proto__ || Object.getPrototypeOf(InfoForm)).call(this, props));
 
     _this.handleSubmit = _this.handleSubmit.bind(_this);
+    _this.handleChange = _this.handleChange.bind(_this);
     _this.state = {
-      contactInfo: _this.props.contactInfo,
-      showInfo: undefined
+      showInfo: undefined,
+      nameInput: ""
     };
     return _this;
   }
 
   _createClass(InfoForm, [{
+    key: 'handleChange',
+    value: function handleChange(e) {
+      this.setState({
+        nameInput: e.target.value
+      });
+    }
+  }, {
     key: 'handleSubmit',
     value: function handleSubmit(e) {
       e.preventDefault();
-      this.setState({
-        showInfo: 1
-      });
       var table = this.props.table;
-      var value = this.nameInput.value;
+      var value = this.state.nameInput;
       var result = [];
       table.forEach(function (element, i, arr) {
         if (value === element.name) {
@@ -24095,20 +24126,20 @@ var InfoForm = function (_React$Component) {
       }, result);
 
       if (!result.length) {
-        result.push({});
+        //result.push({});
         this.setState({
           showInfo: 0
         });
-      };
-      this.setState({
-        contactInfo: result[0]
-      });
+      } else {
+        this.setState({
+          showInfo: 1,
+          contactInfo: result[0]
+        });
+      }
     }
   }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
-
       return _react2.default.createElement(
         'div',
         null,
@@ -24137,9 +24168,7 @@ var InfoForm = function (_React$Component) {
                 _react2.default.createElement(
                   'td',
                   null,
-                  _react2.default.createElement('input', { name: 'name', type: 'text', ref: function ref(input) {
-                      return _this2.nameInput = input;
-                    } })
+                  _react2.default.createElement('input', { name: 'name', type: 'text', value: this.state.nameInput, onChange: this.handleChange })
                 )
               )
             )
